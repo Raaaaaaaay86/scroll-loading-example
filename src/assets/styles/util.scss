@@ -1,0 +1,14 @@
+.container {
+  margin: 0 auto;
+  @each $name, $viewportSiize, $maxWidth in $viewports {
+    @media (max-width: $viewportSiize + px) {
+      @if $name == '2xl' {
+        max-width: $maxWidth;
+      } @else if $name == 'sm'{
+        max-width: $maxWidth;
+      } @else {
+        max-width: $maxWidth;
+      }
+    }
+  }
+}
