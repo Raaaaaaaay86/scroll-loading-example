@@ -32,14 +32,13 @@ export default defineComponent({
     const isLoading = ref<boolean>(false);
 
     const getUsers = async (
-      mode: 'init' | 'update',
       requestAmount: number = 10
     ) => {
       const data = await (
         await fetch(`https://randomuser.me/api/?results=${requestAmount}`)
       ).json();
 
-      if (mode === 'init') {
+      if (userList.length === 0) {
         userList.splice(1, 0, ...data.results);
       } else {
         userList.splice(userList.length - 1, 0, ...data.results);
@@ -50,7 +49,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      getUsers('init');
+      getUsers();
 
       document.addEventListener('scroll', (event) => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -60,7 +59,7 @@ export default defineComponent({
           document.querySelector('body')!.style.overflowY = 'hidden';
 
           setTimeout(() => {
-            getUsers('update', 3);
+            getUsers(3);
           }, 0);
         }
       });
